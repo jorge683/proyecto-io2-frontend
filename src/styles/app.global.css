@@ -1,0 +1,27 @@
+@import "~antd/dist/antd.css";
+
+.items-center {
+  align-items: center;
+}
+
+.Box-divider--light-bottom-1 {
+  box-shadow: inset 0 -1px #e3e8ee;
+}
+
+.mx-auto {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.container-sm {
+  max-width: 640px;
+}
+
+.container-lg {
+  max-width: 1024px;
+}
+
+.container-xl {
+  max-width: 1280px;
+}
+
