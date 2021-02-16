@@ -1,5 +1,8 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Form, Input, Button } from "antd";
+import { loginUser } from "../../api_functions";
+
 const layout = {
   labelCol: {
     span: 8,
@@ -16,8 +19,12 @@ const tailLayout = {
 };
 
 export default function Container() {
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  let history = useHistory();
+  const onFinish = ({ username, password }) => {
+    console.log("Success:");
+    loginUser(username, password).then((dto) => {
+      history.push("/dashboard");
+    });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -25,7 +32,7 @@ export default function Container() {
   };
 
   return (
-    <div style={{ width: "30%", margin: "auto", paddingTop: "1%" }}>
+    <div style={{ width: "30%", margin: "auto", paddingTop: "5%" }}>
       <Form
         {...layout}
         name="basic"

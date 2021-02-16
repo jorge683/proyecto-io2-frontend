@@ -1,16 +1,28 @@
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { ConfigProvider } from "antd";
+import locale from "antd/es/locale/es_ES";
 import "./styles/app.global.css";
 
-import { LoginScreen } from "./Login";
+import { LoginScreen } from "./Components/Login";
+import DashboardScreen from "./Components/DashboardScreen";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header" style={{ backgroundColor: "grey" }}>
-        Este es el header
-      </header>
-      <LoginScreen />
-    </div>
+    <ConfigProvider locale={locale}>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/dashboard" component={DashboardScreen} />
+          <Route component={Login} />
+        </Switch>
+      </BrowserRouter>
+    </ConfigProvider>
   );
 }
 
-export default App;
+const Login = () => {
+  return (
+    <div className="App">
+      <LoginScreen />
+    </div>
+  );
+};
