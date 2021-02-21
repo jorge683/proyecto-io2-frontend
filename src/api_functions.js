@@ -6,7 +6,7 @@ export function loginUser(username, password) {
     .post(`http://localhost:8080/login/${username}/${password}`)
     .then(({ data }) => data)
     .catch((error) => {
-      message.error("Contraseña incorrecta u otro error");
+      message.error("Ha ocurrido un error");
       return Promise.reject(error.response);
     });
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
+
 import { loginUser } from "../../api_functions";
 
 const layout = {
@@ -22,8 +23,12 @@ export default function Container() {
   let history = useHistory();
   const onFinish = ({ username, password }) => {
     console.log("Success:");
-    loginUser(username, password).then((dto) => {
-      history.push("/dashboard");
+    loginUser(username, password).then((isValid) => {
+      if (isValid) {
+        history.push("/dashboard", { username });
+      } else {
+        message.error("Credenciales invalidas");
+      }
     });
   };
 
