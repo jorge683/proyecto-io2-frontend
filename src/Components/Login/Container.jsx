@@ -1,35 +1,28 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button } from "antd";
 
 import { loginUser } from "../../api_functions";
 
 const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
 };
 const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16,
-  },
+  wrapperCol: { offset: 8, span: 16 },
 };
 
 export default function Container() {
   let history = useHistory();
   const onFinish = ({ username, password }) => {
-    console.log("Success:");
-    loginUser(username, password).then((isValid) => {
-      if (isValid) {
-        history.push("/dashboard", { username });
-      } else {
-        message.error("Credenciales invalidas");
-      }
-    });
+    history.push("/dashboard", { username });
+
+    /** Esto se debe integrar cuando este listo el nuevo login  */
+
+    //loginUser(username, password).then((isValid) => {
+    //  history.push("/dashboard", { username });
+    //  message.error("Credenciales invalidas");
+    //});
   };
 
   const onFinishFailed = (errorInfo) => {

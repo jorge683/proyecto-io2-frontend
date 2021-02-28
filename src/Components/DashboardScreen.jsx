@@ -1,5 +1,15 @@
 import React from "react";
-import { Typography, Layout, Menu, Card, Row, Col, Statistic } from "antd";
+import { useHistory } from "react-router-dom";
+import {
+  Typography,
+  Layout,
+  Menu,
+  Card,
+  Row,
+  Col,
+  Statistic,
+  Dropdown,
+} from "antd";
 import {
   UsergroupAddOutlined,
   ControlOutlined,
@@ -12,7 +22,31 @@ const { Title, Link } = Typography;
 const { Content, Header } = Layout;
 
 export default function DashboardScreen(props) {
-  const { username = "Hola" } = props.location.state;
+  let history = useHistory();
+  const username = "Hola";
+  const adminMenu = (
+    <Menu>
+      <Menu.Item key="#users" onClick={() => history.push("/users")}>
+        Usuarios
+      </Menu.Item>
+      <Menu.Item key="#role" onClick={() => history.push("/roles")}>
+        Roles
+      </Menu.Item>
+    </Menu>
+  );
+
+  const developmentMenu = (
+    <Menu>
+      <Menu.Item key="1">(Sin opciones disponibles)</Menu.Item>
+    </Menu>
+  );
+
+  const configMenu = (
+    <Menu>
+      <Menu.Item key="1">(Sin opciones disponibles)</Menu.Item>
+    </Menu>
+  );
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header className="header">
@@ -36,6 +70,7 @@ export default function DashboardScreen(props) {
             <CustomCard
               title="Administración"
               desc="Crear Roles, Crear Usuarios, Asignar Roles a Usuarios"
+              menu={adminMenu}
               statDataList={[
                 {
                   title: "Usuarios",
@@ -54,6 +89,7 @@ export default function DashboardScreen(props) {
             <CustomCard
               title="Desarrollo"
               desc="Crear Proyecto, Crear o agregar Tareas a proyecto, Conectar Tareas"
+              menu={developmentMenu}
               statDataList={[
                 {
                   title: "Proyectos",
@@ -72,6 +108,7 @@ export default function DashboardScreen(props) {
             <CustomCard
               title="Gestión de la Configuración"
               desc="Crear línea base, Visualizar líneas bases en Tabla"
+              menu={configMenu}
               statDataList={[
                 {
                   title: "Total Lineas Base",
@@ -92,28 +129,31 @@ export default function DashboardScreen(props) {
   );
 }
 
-const CustomCard = ({ title, desc, statDataList = [] }) => {
+const CustomCard = ({ title, desc, menu, statDataList = [] }) => {
   const [stat1, stat2] = statDataList;
+
   return (
-    <Card
-      hoverable
-      cover={
-        <Card>
-          <Row>
-            <Col span={12}>
-              <Statistic valueStyle={{ color: "#3f8600" }} {...stat1} />
-            </Col>
-            <Col span={12}>
-              <Statistic valueStyle={{ color: "#3f8600" }} {...stat2} />
-            </Col>
-          </Row>
-        </Card>
-      }
-    >
-      <Card.Meta
-        title={<Link target="_blank">{title}</Link>}
-        description={desc}
-      />
-    </Card>
+    <Dropdown overlay={menu} trigger={["click"]}>
+      <Card
+        hoverable
+        cover={
+          <Card>
+            <Row>
+              <Col span={12}>
+                <Statistic valueStyle={{ color: "#3f8600" }} {...stat1} />
+              </Col>
+              <Col span={12}>
+                <Statistic valueStyle={{ color: "#3f8600" }} {...stat2} />
+              </Col>
+            </Row>
+          </Card>
+        }
+      >
+        <Card.Meta
+          title={<Link target="_blank">{title}</Link>}
+          description={desc}
+        />
+      </Card>
+    </Dropdown>
   );
 };
