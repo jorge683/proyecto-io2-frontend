@@ -1,8 +1,8 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 
-import { loginUser } from "../../api_functions";
+import { useAuth } from "../../auth_functions";
 
 const layout = {
   labelCol: { span: 8 },
@@ -14,15 +14,15 @@ const tailLayout = {
 
 export default function Container() {
   let history = useHistory();
+  let location = useLocation();
+  let auth = useAuth();
+
+  let { from } = location.state || { from: { pathname: "/" } };
+
   const onFinish = ({ username, password }) => {
-    history.push("/dashboard", { username });
-
-    /** Esto se debe integrar cuando este listo el nuevo login  */
-
-    //loginUser(username, password).then((isValid) => {
-    //  history.push("/dashboard", { username });
-    //  message.error("Credenciales invalidas");
-    //});
+    auth.signIn(username, password, () => {
+      history.replace(from);
+    });
   };
 
   const onFinishFailed = (errorInfo) => {
