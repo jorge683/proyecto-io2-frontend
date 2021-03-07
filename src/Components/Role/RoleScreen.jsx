@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { createRole, getRoles, updateRole } from "../../api_functions";
 import RoleCreationForm from "./RoleCreationForm";
 import RoleEditForm from "./RoleEditForm";
+import { AppstoreAddOutlined } from "@ant-design/icons";
 
 const { Content, Header } = Layout;
 const { Title } = Typography;
@@ -56,11 +57,22 @@ export default function RoleScreen(props) {
         }}
       >
         <div style={{ width: "80%", margin: "auto" }}>
-          <Link to="/dashboard">Volver al Dashboard</Link>
-          <Title level={5} style={{ textAlign: "center" }}>
+          <Link to="/">Volver al Dashboard</Link>
+          <Title level={5} style={{ textAlign: "center", marginBottom: "2px" }}>
             Listado de Roles
+            <Button
+              type="primary"
+              icon={<AppstoreAddOutlined />}
+              style={{
+                marginLeft: "20px",
+                marginBottom: "10px",
+                float: "right",
+              }}
+              onClick={() => setShowCreation(true)}
+            >
+              Crear Rol
+            </Button>
           </Title>
-          <Button onClick={() => setShowCreation(true)}> Crear Rol</Button>
           <Table
             rowKey="id"
             dataSource={roleList}

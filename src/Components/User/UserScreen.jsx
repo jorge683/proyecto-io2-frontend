@@ -1,23 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Typography, Layout, Menu, Table, Button, Tooltip, Tag } from "antd";
+import { Typography, Layout, Menu, Table, Button, Tag } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
 import UserCreationForm from "./UserCreationForm";
-import { getUsers } from "../../api_functions";
+import { createUser, getUsers, updateUser } from "../../api_functions";
+import UserEditForm from "./UserEditForm";
 
 const { Content, Header } = Layout;
 const { Title } = Typography;
 
 export default function UserScreen(props) {
-  const [creationVisible, setCreationVisible] = useState(false);
   const [userList, setUserList] = useState([]);
+  const [creationVisible, setCreationVisible] = useState(false);
+  const [userForEdit, setUserForEdit] = useState({});
 
   useEffect(() => {
-    getUsers().then((users) => {
-      console.log(users);
-      setUserList(users);
-    });
+    getUsers().then((users) => setUserList(users));
   }, []);
+
+  const create = (formValues) => {
+    createUser(formValues).then(() => {
+      setCreationVisible(false);
+      getUsers().then((users) => setUserList(users));
+    });
+  };
+
+  const onEdit = (selectedUser) => setUserForEdit(selectedUser);
+  const update = (formValues) => {
+     console.log(formValues);
+    updateUser(formValues).then(() => {
+      setUserForEdit({});
+      getUsers().then((users) => setUserList(users));
+    });
+  };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -37,22 +52,41 @@ export default function UserScreen(props) {
         }}
       >
         <div style={{ width: "80%", margin: "auto" }}>
-          <Link to="/dashboard">Volver al Dashboard</Link>
+          <Link to="/">Volver al Dashboard</Link>
           <Title level={5} style={{ textAlign: "center" }}>
             Listado de Usuarios
-            <Tooltip title="Crear nuevo usuario">
-              <Button
-                type="primary"
-                icon={<UserAddOutlined />}
-                style={{ marginLeft: "20px" }}
-                onClick={() => setCreationVisible(true)}
-              />
-            </Tooltip>
+            <Button
+              type="primary"
+              icon={<UserAddOutlined />}
+              style={{
+                marginLeft: "20px",
+                marginBottom: "10px",
+                float: "right",
+              }}
+              onClick={() => setCreationVisible(true)}
+            >
+              Crear Usuario
+            </Button>
           </Title>
-          <Table rowKey="userId" dataSource={userList} columns={columns} />
+          <Table
+            rowKey="userId"
+            dataSource={userList}
+            columns={getColumns(onEdit)}
+          />
 
           {creationVisible && (
-            <UserCreationForm hideForm={() => setCreationVisible(false)} />
+            <UserCreationForm
+              hideForm={() => setCreationVisible(false)}
+              onSubmit={create}
+            />
+          )}
+
+          {userForEdit.userId && (
+            <UserEditForm
+              currentUser={userForEdit}
+              hideForm={() => setUserForEdit({})}
+              onSubmit={update}
+            />
           )}
         </div>
       </Content>
@@ -60,7 +94,7 @@ export default function UserScreen(props) {
   );
 }
 
-const columns = [
+const getColumns = (onEdit) => [
   {
     title: "Nombre de Usuario",
     dataIndex: "userName",
@@ -70,14 +104,24 @@ const columns = [
     title: "Roles",
     dataIndex: "roles",
     render: (roles) => {
-      console.log(roles);
       return (
         <div>
-          {roles.map(({ role }) => (
-            <Tag color="blue">{role}</Tag>
+          {roles.map(({ role, id }) => (
+            <Tag color="blue" key={id}>
+              {role}
+            </Tag>
           ))}
         </div>
       );
     },
+  },
+  {
+    title: "Acciones",
+    key: "actions",
+    render: (text, record) => (
+      <Button onClick={() => onEdit(record)} type="link">
+        Editar
+      </Button>
+    ),
   },
 ];
