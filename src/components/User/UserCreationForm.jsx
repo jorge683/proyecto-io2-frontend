@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Form, Input, Modal, Row, Select } from "antd";
 import { getRoles } from "../../api_functions";
 
-export default function UserEditForm({ hideForm, onSubmit, currentUser }) {
+export default function UserCreationForm({ hideForm, onSubmit }) {
   const [form] = Form.useForm();
   const [roleList, setRoleList] = useState([]);
 
@@ -12,30 +12,24 @@ export default function UserEditForm({ hideForm, onSubmit, currentUser }) {
     });
   }, []);
 
-  const onUpdate = () => {
+  const onCreate = () => {
     form.validateFields().then(({ roleIds, ...formValues }) => {
-      const roles = roleList.filter(r => roleIds.includes(r.id));
-
-      const updatedUser = { ...currentUser, ...formValues, roles };
-      onSubmit(updatedUser);
+      const roles = roleIds.map((id) => {
+        return { id };
+      });
+      onSubmit({ ...formValues, roles });
     });
   };
-
-  const getInitialRoles = () => currentUser.roles.map((r) => r.id);
 
   return (
     <Modal
       visible
-      title="Editar Role"
-      okText="Actualizar"
+      title="Crear nuevo usuario"
+      okText="Crear"
       onCancel={hideForm}
-      onOk={onUpdate}
+      onOk={onCreate}
     >
-      <Form
-        form={form}
-        name="edit_user_form"
-        initialValues={{ ...currentUser, roleIds: getInitialRoles() }}
-      >
+      <Form form={form} layout="vertical" name="creation_user_form">
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
@@ -79,19 +73,27 @@ export default function UserEditForm({ hideForm, onSubmit, currentUser }) {
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item name="nombre" label="Nombre">
+            <Form.Item
+              name="nombre"
+              label="Nombre"
+              rules={[{ required: true }]}
+            >
               <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item name="apellido" label="Apellido">
+            <Form.Item
+              name="apellido"
+              label="Apellido"
+              rules={[{ required: true }]}
+            >
               <Input />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item name="email" label="Email">
+            <Form.Item name="email" label="Email" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
           </Col>

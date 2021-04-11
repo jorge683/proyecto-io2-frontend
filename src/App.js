@@ -4,11 +4,13 @@ import { ConfigProvider } from "antd";
 import locale from "antd/es/locale/es_ES";
 import "./styles/app.global.css";
 
-import { LoginScreen } from "./Components/Login";
-import DashboardScreen from "./Components/DashboardScreen";
-import UserScreen from "./Components/User/UserScreen";
-import RoleScreen from "./Components/Role/RoleScreen";
+import { LoginScreen } from "./components/Login";
+import DashboardScreen from "./components/DashboardScreen";
+import UserScreen from "./components/User/UserScreen";
+import RoleScreen from "./components/Role/RoleScreen";
+import ProjectScreen from "./components/Project/ProjectScreen";
 import { ProvideAuth, useAuth } from "./auth_functions";
+import TaskScreen from "./components/Task/TaskScreen";
 
 export default function App() {
   return (
@@ -22,6 +24,12 @@ export default function App() {
             </PrivateRoute>
             <PrivateRoute path="/roles">
               <RoleScreen />
+            </PrivateRoute>
+            <PrivateRoute path="/projects">
+              <ProjectScreen />
+            </PrivateRoute>
+            <PrivateRoute path="/tasks">
+              <TaskScreen />
             </PrivateRoute>
             <PrivateRoute path="/">
               <DashboardScreen />

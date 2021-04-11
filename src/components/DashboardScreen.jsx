@@ -51,7 +51,20 @@ export default function DashboardScreen(props) {
 
   const developmentMenu = (
     <Menu>
-      <Menu.Item key="1">(Sin opciones disponibles)</Menu.Item>
+      <Menu.Item
+        key="#projects"
+        onClick={() => history.push("/projects")}
+        hidden={!usePermitValidator([PROJECT_MANAGER])}
+      >
+        Proyectos
+      </Menu.Item>
+      <Menu.Item
+        key="#tasks"
+        onClick={() => history.push("/tasks")}
+        hidden={!usePermitValidator([TASK_MANAGER])}
+      >
+        Tareas
+      </Menu.Item>
     </Menu>
   );
 

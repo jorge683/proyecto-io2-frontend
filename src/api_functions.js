@@ -80,3 +80,63 @@ export function getPermits() {
       return Promise.reject(error.response);
     });
 }
+
+export function getProjects() {
+  return axios
+    .get(`http://localhost:8080/proyectos`)
+    .then(({ data }) => data)
+    .catch((error) => {
+      message.error("Ha ocurrido un error");
+      return Promise.reject(error.response);
+    });
+}
+
+export function createProject(newProject) {
+  return axios
+    .post(`http://localhost:8080/proyectos`, newProject)
+    .then(({ data }) => data)
+    .catch((error) => {
+      message.error("Ha ocurrido un error");
+      return Promise.reject(error.response);
+    });
+}
+
+export function updateProject(updatedProject) {
+  return axios
+    .put(`http://localhost:8080/proyectos/${updatedProject.id}`, updatedProject)
+    .then(({ data }) => data)
+    .catch((error) => {
+      message.error("Ha ocurrido un error");
+      return Promise.reject(error.response);
+    });
+}
+
+export function getTasks() {
+  return axios
+    .get(`http://localhost:8080/tareas`)
+    .then(({ data }) => data)
+    .catch((error) => {
+      message.error("Ha ocurrido un error");
+      return Promise.reject(error.response);
+    });
+}
+
+export function createTask(newTask) {
+  return axios
+    .post(`http://localhost:8080/tareas`, newTask)
+    .then(({ data }) => data)
+    .catch((error) => {
+      message.error("Ha ocurrido un error");
+      return Promise.reject(error.response);
+    });
+}
+
+export function updateTask(updatedTask) {
+  return axios
+    .put(`http://localhost:8080/tareas/${updatedTask.id}`, updatedTask)
+    .then(({ data }) => data)
+    .catch((error) => {
+      message.error("Ha ocurrido un error");
+      return Promise.reject(error.response);
+    });
+}
