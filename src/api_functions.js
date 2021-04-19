@@ -140,3 +140,13 @@ export function updateTask(updatedTask) {
       return Promise.reject(error.response);
     });
 }
+
+export function getStats() {
+  return axios
+    .get(`http://localhost:8080/stats`)
+    .then(({ data }) => data)
+    .catch((error) => {
+      message.error("Ha ocurrido un error");
+      return Promise.reject(error.response);
+    });
+}

@@ -18,7 +18,6 @@ function useProvideAuth() {
 
   const signIn = (username, password, cb) => {
     loginUser(username, password).then(({ data: userData }) => {
-      console.log(user);
       if (userData) {
         setUser(userData);
         cb();

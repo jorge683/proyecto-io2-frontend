@@ -9,8 +9,10 @@ import DashboardScreen from "./components/DashboardScreen";
 import UserScreen from "./components/User/UserScreen";
 import RoleScreen from "./components/Role/RoleScreen";
 import ProjectScreen from "./components/Project/ProjectScreen";
-import { ProvideAuth, useAuth } from "./auth_functions";
 import TaskScreen from "./components/Task/TaskScreen";
+import BaseLineScreen from "./components/BaseLine/BaseLineScreen";
+
+import { ProvideAuth, useAuth } from "./auth_functions";
 
 export default function App() {
   return (
@@ -30,6 +32,9 @@ export default function App() {
             </PrivateRoute>
             <PrivateRoute path="/tasks">
               <TaskScreen />
+            </PrivateRoute>
+            <PrivateRoute path="/base-line">
+              <BaseLineScreen />
             </PrivateRoute>
             <PrivateRoute path="/">
               <DashboardScreen />

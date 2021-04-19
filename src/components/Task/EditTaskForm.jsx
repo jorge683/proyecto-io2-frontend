@@ -77,6 +77,7 @@ export default function EditTaskForm({ hideForm, onSubmit, task }) {
               rules={[{ required: true }]}
             >
               <Select
+                disabled
                 style={{ width: "100%" }}
                 placeholder="Seleccione el proyecto"
               >
@@ -93,6 +94,7 @@ export default function EditTaskForm({ hideForm, onSubmit, task }) {
           <Col span={24}>
             <Form.Item name="idTareaPadre" label="Tarea Padre">
               <Select
+                disabled
                 style={{ width: "100%" }}
                 placeholder="Seleccione la tarea padre"
               >
