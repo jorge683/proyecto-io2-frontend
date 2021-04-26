@@ -12,7 +12,6 @@ export default function EditProjectForm({ hideForm, onSubmit, project }) {
     });
   };
 
-  console.log(project);
   return (
     <Modal
       visible

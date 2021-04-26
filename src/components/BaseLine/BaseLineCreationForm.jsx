@@ -15,11 +15,10 @@ export default function BaseLineCreationForm({ hideForm, onSubmit }) {
 
   const onCreate = () => {
     form.validateFields().then(({ taskIds = [], ...formValues }) => {
-      const tasks = taskIds.map((id) => {
+      const tareas = taskIds.map((id) => {
         return { id };
       });
-      console.log(tasks, formValues);
-      //onSubmit({ ...formValues, roles });
+      onSubmit({ tareas });
     });
   };
 

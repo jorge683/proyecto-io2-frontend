@@ -150,3 +150,23 @@ export function getStats() {
       return Promise.reject(error.response);
     });
 }
+
+export function getBLs() {
+  return axios
+    .get(`http://localhost:8080/linea-base`)
+    .then(({ data }) => data)
+    .catch((error) => {
+      message.error("Ha ocurrido un error");
+      return Promise.reject(error.response);
+    });
+}
+
+export function createBL(newBL) {
+  return axios
+    .post(`http://localhost:8080/linea-base`, newBL)
+    .then(({ data }) => data)
+    .catch((error) => {
+      message.error("Ha ocurrido un error");
+      return Promise.reject(error.response);
+    });
+}

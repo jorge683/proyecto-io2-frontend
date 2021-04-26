@@ -25,7 +25,6 @@ export default function EditTaskForm({ hideForm, onSubmit, task }) {
     });
   };
 
-  console.log(task);
   return (
     <Modal
       visible

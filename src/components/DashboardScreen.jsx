@@ -169,7 +169,7 @@ export default function DashboardScreen(props) {
                 statDataList={[
                   {
                     title: "Total Lineas Base",
-                    value: "n/a",
+                    value: stats.LineasBase,
                     prefix: <FundProjectionScreenOutlined />,
                   },
                   {

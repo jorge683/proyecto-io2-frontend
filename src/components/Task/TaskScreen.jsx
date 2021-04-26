@@ -118,7 +118,11 @@ const getColumns = (onEdit) => [
     title: "Acciones",
     key: "actions",
     render: (text, record) => (
-      <Button onClick={() => onEdit(record)} type="link">
+      <Button
+        onClick={() => onEdit(record)}
+        disabled={record.lineaBase !== null}
+        type="link"
+      >
         Editar
       </Button>
     ),

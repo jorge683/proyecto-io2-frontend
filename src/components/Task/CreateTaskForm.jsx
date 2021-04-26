@@ -10,10 +10,6 @@ export default function CreateTaskForm({ hideForm, onSubmit }) {
   const [projectList, setProjectList] = useState([]);
 
   useEffect(() => {
-    getTasks().then((list) => {
-      setTaskList(list);
-    });
-
     getProjects().then((list) => {
       setProjectList(list);
     });
@@ -22,6 +18,12 @@ export default function CreateTaskForm({ hideForm, onSubmit }) {
   const onCreate = () => {
     form.validateFields().then((formValues) => {
       onSubmit(formValues);
+    });
+  };
+
+  const onChangeProject = (projectId) => {
+    getTasks().then((list) => {
+      setTaskList(list.filter((t) => t.proyecto.id === projectId));
     });
   };
 
@@ -73,6 +75,7 @@ export default function CreateTaskForm({ hideForm, onSubmit }) {
               <Select
                 style={{ width: "100%" }}
                 placeholder="Seleccione el proyecto"
+                onChange={onChangeProject}
               >
                 {projectList.map(({ id, nombre }) => (
                   <Select.Option value={id} key={id}>

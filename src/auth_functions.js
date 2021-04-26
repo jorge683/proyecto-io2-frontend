@@ -39,7 +39,6 @@ function useProvideAuth() {
 
 export function usePermitValidator(testPermit = []) {
   let auth = useContext(authContext);
-  console.log(auth);
   const { permits } = auth.user;
   if (testPermit) {
     if (typeof testPermit === "string") {

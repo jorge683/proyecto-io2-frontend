@@ -27,7 +27,6 @@ export default function UserScreen(props) {
 
   const onEdit = (selectedUser) => setUserForEdit(selectedUser);
   const update = (formValues) => {
-     console.log(formValues);
     updateUser(formValues).then(() => {
       setUserForEdit({});
       getUsers().then((users) => setUserList(users));
