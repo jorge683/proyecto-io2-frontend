@@ -5,6 +5,7 @@ import { createRole, getRoles, updateRole } from "../../api_functions";
 import RoleCreationForm from "./RoleCreationForm";
 import RoleEditForm from "./RoleEditForm";
 import { AppstoreAddOutlined } from "@ant-design/icons";
+import { useAuth } from "../../auth_functions";
 
 const { Content, Header } = Layout;
 const { Title } = Typography;
@@ -13,6 +14,9 @@ export default function RoleScreen(props) {
   const [roleList, setRoleList] = useState([]);
   const [showCreation, setShowCreation] = useState(false);
   const [roleForEdit, setRoleForEdit] = useState({});
+  let auth = useAuth();
+  const { user } = auth;
+  const { userName = "" } = user;
 
   useEffect(() => {
     getRoles().then((roles) => {
@@ -45,7 +49,7 @@ export default function RoleScreen(props) {
         <div className="logo" />
         <div style={{ float: "right" }}>
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
-            <Menu.Item key="1">Usuario</Menu.Item>
+            <Menu.Item key="1">{userName.toUpperCase()}</Menu.Item>
           </Menu>
         </div>
       </Header>

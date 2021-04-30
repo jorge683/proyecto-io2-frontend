@@ -9,6 +9,7 @@ import {
 } from "../../api_functions";
 import CreateProjectForm from "./CreateProjectForm";
 import EditProjectForm from "./EditProjectForm";
+import { useAuth } from "../../auth_functions";
 
 const { Content, Header } = Layout;
 const { Title } = Typography;
@@ -17,6 +18,9 @@ export default function ProjectScreen(props) {
   const [projectList, setProjectList] = useState([]);
   const [creationVisible, setCreationVisible] = useState(false);
   const [projectForEdit, setProjectForEdit] = useState({});
+  let auth = useAuth();
+  const { user } = auth;
+  const { userName = "" } = user;
 
   useEffect(() => {
     getProjects().then((projects) => setProjectList(projects));
@@ -43,7 +47,7 @@ export default function ProjectScreen(props) {
         <div className="logo" />
         <div style={{ float: "right" }}>
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
-            <Menu.Item key="1">Usuario</Menu.Item>
+            <Menu.Item key="1">{userName.toUpperCase()}</Menu.Item>
           </Menu>
         </div>
       </Header>

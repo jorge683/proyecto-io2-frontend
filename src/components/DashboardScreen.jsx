@@ -15,6 +15,9 @@ import {
   ControlOutlined,
   FundProjectionScreenOutlined,
   UnorderedListOutlined,
+  ScheduleOutlined,
+  VerticalAlignBottomOutlined,
+  VerticalAlignMiddleOutlined,
 } from "@ant-design/icons";
 import { PERMITS } from "../constants";
 import { getStats } from "../api_functions";
@@ -152,7 +155,7 @@ export default function DashboardScreen(props) {
                   {
                     title: "Tareas",
                     value: stats.Tareas,
-                    prefix: <UnorderedListOutlined />,
+                    prefix: <ScheduleOutlined />,
                   },
                 ]}
               />
@@ -161,21 +164,16 @@ export default function DashboardScreen(props) {
 
           {usePermitValidator([CONFIGURATION_MANAGER]) && (
             <Col span={6}>
-              <CustomCard
+              <CustomCard2
                 title="Gestión de la Configuración"
                 desc="Crear línea base, Visualizar líneas bases en Tabla"
                 menu={configMenu}
                 loading={loading}
-                statDataList={[
+                statDataList2={[
                   {
                     title: "Total Lineas Base",
                     value: stats.LineasBase,
-                    prefix: <FundProjectionScreenOutlined />,
-                  },
-                  {
-                    title: "Proyectos",
-                    value: stats.Proyectos,
-                    prefix: <FundProjectionScreenOutlined />,
+                    prefix: <VerticalAlignMiddleOutlined />,
                   },
                 ]}
               />
@@ -215,3 +213,30 @@ const CustomCard = ({ title, desc, menu, statDataList = [], loading }) => {
     </Dropdown>
   );
 };
+
+const CustomCard2 = ({ title, desc, menu, statDataList2 = [], loading }) => {
+  const [stat1] = statDataList2;
+
+  return (
+    <Dropdown overlay={menu} trigger={["hover"]}>
+      <Card
+        hoverable
+        cover={
+          <Card loading={loading}>
+            <Row>
+              <Col span={12}>
+                <Statistic valueStyle={{ color: "#3f8600" }} {...stat1} />
+              </Col>
+            </Row>
+          </Card>
+        }
+      >
+        <Card.Meta
+          title={<Link target="_blank">{title}</Link>}
+          description={desc}
+        />
+      </Card>
+    </Dropdown>
+  );
+};
+

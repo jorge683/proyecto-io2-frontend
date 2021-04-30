@@ -5,6 +5,7 @@ import { UserAddOutlined } from "@ant-design/icons";
 import UserCreationForm from "./UserCreationForm";
 import { createUser, getUsers, updateUser } from "../../api_functions";
 import UserEditForm from "./UserEditForm";
+import { useAuth } from "../../auth_functions";
 
 const { Content, Header } = Layout;
 const { Title } = Typography;
@@ -13,6 +14,9 @@ export default function UserScreen(props) {
   const [userList, setUserList] = useState([]);
   const [creationVisible, setCreationVisible] = useState(false);
   const [userForEdit, setUserForEdit] = useState({});
+  let auth = useAuth();
+  const { user } = auth;
+  const { userName = "" } = user;
 
   useEffect(() => {
     getUsers().then((users) => setUserList(users));
@@ -39,7 +43,7 @@ export default function UserScreen(props) {
         <div className="logo" />
         <div style={{ float: "right" }}>
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
-            <Menu.Item key="1">Usuario</Menu.Item>
+            <Menu.Item key="1">{userName.toUpperCase()}</Menu.Item>
           </Menu>
         </div>
       </Header>

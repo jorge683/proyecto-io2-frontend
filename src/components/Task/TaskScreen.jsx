@@ -5,6 +5,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import CreateTaskForm from "./CreateTaskForm";
 import { createTask, getTasks, updateTask } from "../../api_functions";
 import EditTaskForm from "./EditTaskForm";
+import { useAuth } from "../../auth_functions";
 
 const { Content, Header } = Layout;
 const { Title } = Typography;
@@ -13,6 +14,10 @@ export default function TaskScreen(props) {
   const [taskList, setTaskList] = useState([]);
   const [creationVisible, setCreationVisible] = useState(false);
   const [taskForEdit, setTaskForEdit] = useState({});
+  let auth = useAuth();
+  const { user } = auth;
+  const { userName = "" } = user;
+
 
   useEffect(() => {
     getTasks().then((tasks) => setTaskList(tasks));
@@ -39,7 +44,7 @@ export default function TaskScreen(props) {
         <div className="logo" />
         <div style={{ float: "right" }}>
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
-            <Menu.Item key="1">Usuario</Menu.Item>
+            <Menu.Item key="1">{userName.toUpperCase()}</Menu.Item>
           </Menu>
         </div>
       </Header>
