@@ -25,7 +25,9 @@ export default function BaseLineCreationForm({ hideForm, onSubmit }) {
   const onChangeProject = (projectId) => {
     form.resetFields(["taskIds"]);
     getTasks().then((list) => {
-      setTaskList(list.filter((t) => t.proyecto.id === projectId));
+      setTaskList(
+        list.filter((t) => t.proyecto.id === projectId && !t.lineaBase)
+      );
     });
   };
 
